@@ -5,12 +5,8 @@ import Layout from "../components/Layout";
 import { getPokemons } from "../lib/poke";
 
 export default function Home({ contents }) {
-  console.log(getPokemons());
-  const [pokeList, setList] = useState([]);
-  useEffect(async () => {
-    const pokemons = await getPokemons();
-    setList(pokemons);
-  }, []);
+  console.log("contents:", contents);
+
   return (
     <div className="container">
       <Head>
@@ -21,8 +17,8 @@ export default function Home({ contents }) {
         <div>
           <div>mainpage</div>
           <ul>
-            {pokeList &&
-              pokeList.map((item) => (
+            {contents &&
+              contents.map((item) => (
                 <li>
                   <Link href={`pokemons/${item}`}>{item}</Link>
                 </li>
@@ -32,4 +28,14 @@ export default function Home({ contents }) {
       </Layout>
     </div>
   );
+}
+
+export async function getStaticProps() {
+  const pokemons = await getPokemons();
+
+  return {
+    props: {
+      contents: pokemons,
+    },
+  };
 }

@@ -1,3 +1,4 @@
+import Head from "next/head";
 import React from "react";
 import Layout from "../../components/Layout";
 import { getPokemon, getPokemons } from "../../lib/poke";
@@ -5,13 +6,18 @@ import { getPokemon, getPokemons } from "../../lib/poke";
 export default function Basic({ contents }) {
   return (
     <Layout>
-      <p>{contents}</p>
+      <div>
+        <Head>
+          <title>{contents}</title>
+        </Head>
+        <p>{contents}</p>
+      </div>
     </Layout>
   );
 }
 
 export async function getStaticPaths() {
-  const pokemons = await getPokemons();
+  const pokemons = await getPokemons(); //["파이리","꼬부기","피카츄"]
   const paths = pokemons.map((pokemon) => ({
     params: { id: pokemon },
   }));
